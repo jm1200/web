@@ -12,7 +12,6 @@ const App: React.FC = () => {
     }).then(async x => {
       const data = await x.json();
       setAccessToken(data.accessToken);
-      console.log("current access token from useEffect: ", data.accessToken);
       setLoading(false);
     });
   }, []);

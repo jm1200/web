@@ -7,6 +7,18 @@ const uploadFileMutation = gql`
   mutation UploadFile($file: Upload!) {
     uploadFile(file: $file) {
       uploaded
+      rangeStart
+      rangeEnd
+      account
+      transactions {
+        account
+        type
+        datePosted
+        transId
+        name
+        memo
+        amount
+      }
     }
   }
 `;
@@ -18,7 +30,7 @@ const ImportFile = () => {
     ([file]) => {
       console.log("FILE: ", file);
       uploadFile({ variables: { file } }).then(res => {
-        console.log("RESPONSE: ", res);
+        console.log("RESPONSE: ", res.data.uploadFile);
       });
     },
     [uploadFile]

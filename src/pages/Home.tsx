@@ -1,6 +1,6 @@
 import React from "react";
 import { useUsersQuery } from "../generated/graphql";
-import ImportFile from "../graphql/Components/importFile";
+import ImportFile from "../Components/importFile";
 
 interface IHomeProps {}
 
