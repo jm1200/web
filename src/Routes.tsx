@@ -6,12 +6,13 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Bye from "./pages/Bye";
 import Header from "./Header";
+import Nav from "./Components/Nav";
 
 export const Routes: React.FC = () => {
   return (
     <BrowserRouter>
       <div>
-        <Header />
+        >
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/register" component={Register} />

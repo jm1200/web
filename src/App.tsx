@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes } from "./Routes";
+//import { Routes } from "./Routes";
 import { setAccessToken } from "./accessToken";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import {
@@ -8,6 +8,10 @@ import {
   FormControlLabel,
   Checkbox
 } from "@material-ui/core";
+import Nav from "./Components/Nav";
+import { BrowserRouter } from "react-router-dom";
+import gql from "graphql-tag";
+import { useQuery } from "@apollo/react-hooks";
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -46,14 +50,16 @@ const App: React.FC = () => {
 
   return (
     <>
-      <ThemeProvider theme={checked ? lightTheme : darkTheme}>
-        <CssBaseline />
-        <FormControlLabel
-          control={<Checkbox checked={checked} onChange={handleChange} />}
-          label="Theme"
-        />
-        <Routes />
-      </ThemeProvider>
+      <BrowserRouter>
+        <ThemeProvider theme={checked ? lightTheme : darkTheme}>
+          <CssBaseline />
+          <FormControlLabel
+            control={<Checkbox checked={checked} onChange={handleChange} />}
+            label="Theme"
+          />
+          <Nav />
+        </ThemeProvider>
+      </BrowserRouter>
     </>
   );
 };

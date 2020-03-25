@@ -9,6 +9,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Upload: any;
 };
 
 export type LoginResponse = {
@@ -23,6 +24,7 @@ export type Mutation = {
   revokeRefreshTokensForUser: Scalars['Boolean'];
   login: LoginResponse;
   register: Scalars['Boolean'];
+  uploadFile: UploadResponse;
 };
 
 
@@ -42,12 +44,38 @@ export type MutationRegisterArgs = {
   email: Scalars['String'];
 };
 
+
+export type MutationUploadFileArgs = {
+  file: Scalars['Upload'];
+};
+
 export type Query = {
    __typename?: 'Query';
   hello: Scalars['String'];
   bye: Scalars['String'];
   users: Array<User>;
   me?: Maybe<User>;
+};
+
+export type Transaction = {
+   __typename?: 'Transaction';
+  transId: Scalars['String'];
+  account: Scalars['String'];
+  type: Scalars['String'];
+  datePosted: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
+  memo: Scalars['String'];
+  amount: Scalars['String'];
+};
+
+
+export type UploadResponse = {
+   __typename?: 'UploadResponse';
+  uploaded: Scalars['Boolean'];
+  account: Scalars['String'];
+  rangeStart: Scalars['String'];
+  rangeEnd: Scalars['String'];
+  transactions: Array<Transaction>;
 };
 
 export type User = {
