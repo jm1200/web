@@ -31,6 +31,7 @@ import Home from "../pages/Home";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
 import Bye from "../pages/Bye";
+import importFile from "../Components/importFile";
 import { useMeQuery, useLogoutMutation } from "../generated/graphql";
 import { setAccessToken } from "../accessToken";
 
@@ -118,11 +119,17 @@ export default function Nav() {
       </List>
       <Divider />
       <Typography>Auth Links</Typography>
-      <List>
-        <ListItem button>
-          <ListItemLink to="/login2" primary="Login 2" icon={<InboxIcon />} />
-        </ListItem>
-      </List>
+      {user ? (
+        <List>
+          <ListItem button>
+            <ListItemLink
+              to="/importFile"
+              primary="Import File"
+              icon={<InboxIcon />}
+            />
+          </ListItem>
+        </List>
+      ) : null}
     </div>
   );
 
@@ -182,7 +189,8 @@ export default function Nav() {
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/bye" component={Bye} />
-          <CustomRoute path="/login2" component={Register} />
+          <CustomRoute path="/importFile" component={importFile} />
+          <Route component={Home} />
         </Switch>
       </main>
     </div>
@@ -223,9 +231,11 @@ const CustomRoute = (props: any) => {
     console.log("ME: ", data);
     if (!data) {
       //loading screen
+      console.log("no data?");
       return null;
     }
     if (!data.me) {
+      console.log("Redirect??");
       return <Redirect to="/login" />;
     }
     const Component = component as any;
@@ -235,3 +245,7 @@ const CustomRoute = (props: any) => {
 
   return <Route {...rest} render={renderRoute} />;
 };
+
+//TODO
+//1. hide auth links
+//2. protect auth routes
