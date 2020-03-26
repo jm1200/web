@@ -23,7 +23,7 @@ export type Mutation = {
   logout: Scalars['Boolean'];
   revokeRefreshTokensForUser: Scalars['Boolean'];
   login: LoginResponse;
-  register: Scalars['Boolean'];
+  register: LoginResponse;
   uploadFile: UploadResponse;
 };
 
@@ -145,7 +145,14 @@ export type RegisterMutationVariables = {
 
 export type RegisterMutation = (
   { __typename?: 'Mutation' }
-  & Pick<Mutation, 'register'>
+  & { register: (
+    { __typename?: 'LoginResponse' }
+    & Pick<LoginResponse, 'accessToken'>
+    & { user: (
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'email'>
+    ) }
+  ) }
 );
 
 export type UsersQueryVariables = {};
@@ -321,7 +328,13 @@ export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = ApolloReactCommon.QueryResult<MeQuery, MeQueryVariables>;
 export const RegisterDocument = gql`
     mutation Register($email: String!, $password: String!) {
-  register(email: $email, password: $password)
+  register(email: $email, password: $password) {
+    accessToken
+    user {
+      id
+      email
+    }
+  }
 }
     `;
 export type RegisterMutationFn = ApolloReactCommon.MutationFunction<RegisterMutation, RegisterMutationVariables>;
