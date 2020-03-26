@@ -30,12 +30,45 @@ import {
 import Home from "../pages/Home";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
+import Logout from "../pages/Logout";
 import Bye from "../pages/Bye";
-import importFile from "../Components/importFile";
+import ImportFile from "./ImportFile";
 import { useMeQuery, useLogoutMutation } from "../generated/graphql";
 import { setAccessToken } from "../accessToken";
 
 const drawerWidth = 240;
+
+const routes = [
+  { name: "Home", path: "/", auth: "public", component: Home, icon: InboxIcon },
+  {
+    name: "Login",
+    path: "/login",
+    auth: "public",
+    component: Login,
+    icon: InboxIcon
+  },
+  {
+    name: "Register",
+    path: "/register",
+    auth: "public",
+    component: Register,
+    icon: InboxIcon
+  },
+  {
+    name: "Logout",
+    path: "/logout",
+    auth: "loggedIn",
+    component: Logout,
+    icon: InboxIcon
+  },
+  {
+    name: "ImportFile",
+    path: "/importFile",
+    auth: "loggedIn",
+    component: ImportFile,
+    icon: InboxIcon
+  }
+];
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -80,12 +113,18 @@ export default function Nav() {
   if (data && data.me) {
     user = data.me;
   }
+
   const [logout, { client }] = useLogoutMutation();
   const _logout = async () => {
     await logout();
     setAccessToken("");
     await client!.resetStore();
   };
+
+  const builtRoutes = buildRoutes(routes);
+  const builtLinks = buildLinks(routes);
+  console.log(builtLinks);
+
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -100,7 +139,8 @@ export default function Nav() {
       Logged in as: {user ? <div>{user.email}</div> : <div>Not logged in</div>}
       <Typography>Public Links</Typography>
       <List>
-        <ListItem button>
+        {builtLinks.publicRoutes.map((route: any) => route)}
+        {/* <ListItem button>
           <ListItemLink to="/" primary="Home" icon={<InboxIcon />} />
         </ListItem>
         <ListItem button>
@@ -112,22 +152,28 @@ export default function Nav() {
         </ListItem>
         <ListItem button>
           <ListItemLink to="/login" primary="Login" icon={<InboxIcon />} />
-        </ListItem>
-        <ListItem button onClick={_logout}>
-          <ListItemLink to="/logout" primary="Logout" icon={<InboxIcon />} />
+        </ListItem> */}
+
+        <ListItem button>
+          <ListItemLink
+            to="/logout"
+            primary="Logouttttt"
+            icon={<InboxIcon />}
+          />
         </ListItem>
       </List>
       <Divider />
       <Typography>Auth Links</Typography>
       {user ? (
         <List>
-          <ListItem button>
+          {builtLinks.privateRoutes.map((route: any) => route)}
+          {/* <ListItem button>
             <ListItemLink
               to="/importFile"
               primary="Import File"
               icon={<InboxIcon />}
             />
-          </ListItem>
+          </ListItem> */}
         </List>
       ) : null}
     </div>
@@ -185,12 +231,13 @@ export default function Nav() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Switch>
-          <Route exact path="/" component={Home} />
+          {builtRoutes.map(route => route)}
+          {/* <Route exact path="/" component={Home} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/bye" component={Bye} />
-          <CustomRoute path="/importFile" component={importFile} />
-          <Route component={Home} />
+          <CustomRoute path="/importFile" component={ImportFile} />
+          <Route component={Home} /> */}
         </Switch>
       </main>
     </div>
@@ -246,6 +293,69 @@ const CustomRoute = (props: any) => {
   return <Route {...rest} render={renderRoute} />;
 };
 
-//TODO
-//1. hide auth links
-//2. protect auth routes
+function buildRoutes(routes: any) {
+  let builtRoutes = [];
+  let publicRoutes: any = [];
+  let privateRoutes: any = [];
+  routes.map((route: any, index: number) => {
+    if (route.auth === "public") {
+      publicRoutes.push(
+        <Route
+          key={index}
+          exact
+          path={route.path}
+          component={route.component}
+        />
+      );
+    } else {
+      privateRoutes.push(
+        <CustomRoute
+          key={index}
+          path={route.path}
+          component={route.component}
+        />
+      );
+    }
+  });
+  builtRoutes = [
+    ...publicRoutes,
+    ...privateRoutes,
+    <Route key={1000} component={Home} />
+  ];
+
+  return builtRoutes;
+}
+
+function buildLinks(routes: any) {
+  let publicRoutes: any = [];
+  let privateRoutes: any = [];
+
+  routes.map((route: any, index: number) => {
+    if (route.auth === "public") {
+      publicRoutes.push(
+        <ListItem key={index} button>
+          <ListItemLink
+            to={route.path}
+            primary={route.name}
+            //icon={route.icon}
+          />
+        </ListItem>
+      );
+    } else {
+      privateRoutes.push(
+        <ListItem key={index} button>
+          <ListItemLink
+            to={route.path}
+            primary={route.name}
+            //icon={route.icon}
+          />
+        </ListItem>
+      );
+    }
+  });
+
+  return {
+    publicRoutes,
+    privateRoutes
+  };
+}

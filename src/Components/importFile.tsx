@@ -23,7 +23,7 @@ const uploadFileMutation = gql`
   }
 `;
 
-const ImportFile = () => {
+const ImportFile: React.FC = () => {
   const [uploadFile] = useMutation(uploadFileMutation);
 
   const onDrop = useCallback(
