@@ -28,10 +28,7 @@ const ImportFile: React.FC = () => {
 
   const onDrop = useCallback(
     ([file]) => {
-      console.log("FILE: ", file);
-      uploadFile({ variables: { file } }).then(res => {
-        console.log("RESPONSE: ", res.data.uploadFile);
-      });
+      uploadFile({ variables: { file } }).then(res => {});
     },
     [uploadFile]
   );

@@ -33,13 +33,12 @@ const Login: React.FC<IRegisterProps & RouteComponentProps> = ({ history }) => {
             });
           }
         });
-        console.log(response);
 
         if (response && response.data) {
           setAccessToken(response.data.login.accessToken);
         }
         await client?.resetStore();
-        history.push("/");
+        history.push("/loggedInHome");
       }}
     >
       <div>

@@ -2,9 +2,9 @@ import React from "react";
 import { useUsersQuery } from "../generated/graphql";
 import ImportFile from "../Components/ImportFile";
 
-interface IHomeProps {}
+interface ILoggedInHomeProps {}
 
-const Home: React.FC<IHomeProps> = props => {
+const LoggedInHome: React.FC<ILoggedInHomeProps> = props => {
   const { data } = useUsersQuery({ fetchPolicy: "network-only" });
   if (!data) {
     return <div>loading...</div>;
@@ -12,7 +12,7 @@ const Home: React.FC<IHomeProps> = props => {
 
   return (
     <div>
-      <div>Home Page</div>
+      <div>LoggedInHome Page</div>
       <div>
         users:
         <ul>
@@ -30,4 +30,4 @@ const Home: React.FC<IHomeProps> = props => {
   );
 };
 
-export default Home;
+export default LoggedInHome;

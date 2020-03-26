@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-//import { Routes } from "./Routes";
 import { setAccessToken } from "./accessToken";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import {
@@ -10,8 +9,6 @@ import {
 } from "@material-ui/core";
 import Nav from "./Components/Nav";
 import { BrowserRouter } from "react-router-dom";
-import gql from "graphql-tag";
-import { useQuery } from "@apollo/react-hooks";
 
 const darkTheme = createMuiTheme({
   palette: {

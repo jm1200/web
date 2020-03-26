@@ -22,8 +22,11 @@ const Register: React.FC<IRegisterProps & RouteComponentProps> = ({
             password
           }
         });
-        console.log(response);
-        history.push("/");
+
+        console.log("Register response: ", response);
+        //TODO: work on register response, login after register.
+        // need to return user on register mustation in server.
+        history.push("/loggedInHome");
       }}
     >
       <div>
