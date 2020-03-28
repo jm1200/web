@@ -1,0 +1,6 @@
+- Clean up Routes
+- Set up testing environment
+- check error messages in user entity
+- remove MyTextField component into its own component and import in both login and register
+- clean up nav
+- redis user
