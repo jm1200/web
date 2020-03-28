@@ -5,15 +5,15 @@ import { RouteProps } from "react-router-dom";
 
 const Logout: React.FC<RouteProps> = (props: RouteProps) => {
   const [logout, { client }] = useLogoutMutation();
-  const _logout = async () => {
-    await logout();
-    setAccessToken("");
-    await client!.resetStore();
-  };
 
   useEffect(() => {
+    const _logout = async () => {
+      await logout();
+      setAccessToken("");
+      await client!.resetStore();
+    };
     _logout();
-  }, []);
+  }, [logout, client]);
   return <div>Logout</div>;
 };
 
