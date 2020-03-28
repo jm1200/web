@@ -1,10 +1,8 @@
 import React from "react";
-import LoggedInHome from "../pages/LoggedInHome";
-import LoggedOutHome from "../pages/LoggedOutHome";
 import Login from "../pages/Login";
-import PageNotFound from "../pages/PageNotFound";
 import Logout from "../pages/Logout";
 import Register from "../pages/Register";
+import Home from "../pages/Home";
 import ImportFile from "../Components/ImportFile";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -26,13 +24,16 @@ interface ListItemLinkProps {
   to: string;
 }
 
-const loggedInRoutes = [
+const publicRoutes = [
   {
     name: "Home",
-    path: "/loggedInHome",
-    component: LoggedInHome,
+    path: "/home",
+    component: Home,
     icon: InboxIcon
-  },
+  }
+];
+
+const loggedInRoutes = [
   {
     name: "Logout",
     path: "/logout",
@@ -49,12 +50,6 @@ const loggedInRoutes = [
 
 const loggedOutRoutes = [
   {
-    name: "Home",
-    path: "/loggedOutHome",
-    component: LoggedOutHome,
-    icon: InboxIcon
-  },
-  {
     name: "Login",
     path: "/login",
     component: Login,
@@ -69,13 +64,28 @@ const loggedOutRoutes = [
 ];
 
 export const buildLinks = (): any => {
-  let publicRoutes: any = [];
+  let allRoutes: any = [];
+  let logoutRoutes: any = [];
   let privateRoutes: any = [];
+
+  publicRoutes.forEach((route: any, index: number) => {
+    const Component = route.icon;
+
+    allRoutes.push(
+      <ListItem key={index} button>
+        <ListItemLink
+          to={route.path}
+          primary={route.name}
+          icon={<Component />}
+        />
+      </ListItem>
+    );
+  });
 
   loggedOutRoutes.forEach((route: any, index: number) => {
     const Component = route.icon;
 
-    publicRoutes.push(
+    logoutRoutes.push(
       <ListItem key={index} button>
         <ListItemLink
           to={route.path}
@@ -99,8 +109,9 @@ export const buildLinks = (): any => {
   });
 
   return {
-    publicRoutes,
-    privateRoutes
+    allRoutes,
+    privateRoutes,
+    logoutRoutes
   };
 };
 
@@ -145,11 +156,18 @@ function ListItemLink(props: ListItemLinkProps) {
 
 export const buildRoutes = () => {
   let builtRoutes = [];
-  let publicRoutes: any = [];
+  let allRoutes: any = [];
+  let logoutRoutes: any = [];
   let privateRoutes: any = [];
 
+  publicRoutes.forEach((route: any, index: number) => {
+    allRoutes.push(
+      <Route key={index} exact path={route.path} component={route.component} />
+    );
+  });
+
   loggedOutRoutes.forEach((route: any, index: number) => {
-    publicRoutes.push(
+    logoutRoutes.push(
       <Route key={index} exact path={route.path} component={route.component} />
     );
   });
@@ -161,9 +179,10 @@ export const buildRoutes = () => {
   });
 
   builtRoutes = [
-    ...publicRoutes,
+    ...logoutRoutes,
     ...privateRoutes,
-    <Route key={1000} component={PageNotFound} />
+    ...allRoutes,
+    <Route component={Home} />
   ];
 
   return builtRoutes;

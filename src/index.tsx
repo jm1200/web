@@ -10,6 +10,8 @@ import { ApolloLink, Observable } from "apollo-link";
 import { TokenRefreshLink } from "apollo-link-token-refresh";
 import jwtDecode from "jwt-decode";
 import { createUploadLink } from "apollo-upload-client";
+//import { Snackbar } from "@material-ui/core";
+import history from "./history";
 
 const cache = new InMemoryCache({});
 const uploadLink = createUploadLink({
@@ -83,7 +85,24 @@ const tokenRefreshLink = new TokenRefreshLink({
 });
 
 const errorHandler = onError(({ graphQLErrors, networkError }) => {
-  console.log(graphQLErrors);
+  console.log("Error handler");
+  if (graphQLErrors) {
+    graphQLErrors.forEach(({ message, path, locations }) => {
+      console.log(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+      );
+
+      if (message.includes("not authenticated")) {
+        history.push("/register");
+      }
+      // else {
+      //   console.log("dispatch");
+      //   SnackbarStore.dispatch.snackbar.handleOpen(message);
+      // }
+    });
+    if (networkError) console.log(`Network Error: ${networkError}`);
+  }
+  console.log("These are gql errors: ", graphQLErrors);
   console.log(networkError);
 });
 const client = new ApolloClient({

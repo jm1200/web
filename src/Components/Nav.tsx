@@ -82,6 +82,9 @@ export default function Nav() {
       />
       Logged in as: {user ? <div>{user.email}</div> : <div>Not logged in</div>}
       <Divider />
+      <Typography>Public Links</Typography>
+      <List>{builtLinks.allRoutes.map((route: any) => route)}</List>
+      <Divider />
       {user ? (
         <>
           <Typography>Auth Links</Typography>
@@ -89,8 +92,8 @@ export default function Nav() {
         </>
       ) : (
         <>
-          <Typography>Public Links</Typography>
-          <List>{builtLinks.publicRoutes.map((route: any) => route)}</List>
+          <Typography>Login Links</Typography>
+          <List>{builtLinks.logoutRoutes.map((route: any) => route)}</List>
         </>
       )}
     </div>
