@@ -3,7 +3,9 @@ import Logout from "../pages/Logout";
 import Register from "../pages/Register";
 import Home from "../pages/Home";
 import ImportFile from "../Components/ImportFile";
+import Settings from "../pages/Settings";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
+import { Settings as SettingsIcon } from "@material-ui/icons";
 import { OverridableComponent } from "@material-ui/core/OverridableComponent";
 import { SvgIconTypeMap } from "@material-ui/core";
 
@@ -44,6 +46,12 @@ export const routes: IRoutes = {
       path: "/importFile",
       component: ImportFile,
       icon: InboxIcon
+    },
+    {
+      name: "Settings",
+      path: "/settings",
+      component: Settings,
+      icon: SettingsIcon
     }
   ],
 

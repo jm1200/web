@@ -22,8 +22,8 @@ export type Mutation = {
    __typename?: 'Mutation';
   logout: Scalars['Boolean'];
   revokeRefreshTokensForUser: Scalars['Boolean'];
-  login: LoginResponse;
-  register: LoginResponse;
+  login?: Maybe<LoginResponse>;
+  register?: Maybe<LoginResponse>;
   uploadFile: UploadResponse;
 };
 
@@ -108,14 +108,14 @@ export type LoginMutationVariables = {
 
 export type LoginMutation = (
   { __typename?: 'Mutation' }
-  & { login: (
+  & { login?: Maybe<(
     { __typename?: 'LoginResponse' }
     & Pick<LoginResponse, 'accessToken'>
     & { user: (
       { __typename?: 'User' }
       & Pick<User, 'id' | 'email'>
     ) }
-  ) }
+  )> }
 );
 
 export type LogoutMutationVariables = {};
@@ -145,14 +145,14 @@ export type RegisterMutationVariables = {
 
 export type RegisterMutation = (
   { __typename?: 'Mutation' }
-  & { register: (
+  & { register?: Maybe<(
     { __typename?: 'LoginResponse' }
     & Pick<LoginResponse, 'accessToken'>
     & { user: (
       { __typename?: 'User' }
       & Pick<User, 'id' | 'email'>
     ) }
-  ) }
+  )> }
 );
 
 export type UsersQueryVariables = {};

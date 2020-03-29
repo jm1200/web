@@ -24,11 +24,6 @@ const lightTheme = createMuiTheme({
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
-  const [checked, setChecked] = React.useState(false);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
-  };
 
   useEffect(() => {
     fetch("http://localhost:4000/refresh_token", {
@@ -48,12 +43,9 @@ const App: React.FC = () => {
   return (
     <>
       <BrowserRouter>
-        <ThemeProvider theme={checked ? lightTheme : darkTheme}>
+        <ThemeProvider theme={darkTheme}>
           <CssBaseline />
-          <FormControlLabel
-            control={<Checkbox checked={checked} onChange={handleChange} />}
-            label="Theme"
-          />
+
           <Nav />
         </ThemeProvider>
       </BrowserRouter>

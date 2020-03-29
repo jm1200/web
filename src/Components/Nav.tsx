@@ -114,7 +114,7 @@ export default function Nav() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Responsive drawer
+            Web-Boilerplate
           </Typography>
         </Toolbar>
       </AppBar>
