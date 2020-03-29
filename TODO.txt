@@ -4,3 +4,5 @@
 - remove MyTextField component into its own component and import in both login and register
 - clean up nav
 - redis user
+- settings page
+-password type for login/register
