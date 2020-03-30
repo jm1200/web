@@ -12,6 +12,7 @@ import jwtDecode from "jwt-decode";
 import { createUploadLink } from "apollo-upload-client";
 //import { Snackbar } from "@material-ui/core";
 import history from "./history";
+//import { HttpLink } from "apollo-link-http";
 
 const cache = new InMemoryCache({});
 const uploadLink = createUploadLink({

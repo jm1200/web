@@ -61,9 +61,10 @@ export default function Nav() {
   const classes = useStyles();
   const theme = useTheme();
   const { data } = useMeQuery();
+  console.log("nav 64: data", data);
   let user;
-  if (data && data.me) {
-    user = data.me;
+  if (data && data.me && data.me.user) {
+    user = data.me.user;
   }
 
   const builtRoutes = buildRoutes();

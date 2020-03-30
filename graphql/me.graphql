@@ -1,6 +1,11 @@
 query Me {
   me {
-    email
-    id
+    user {
+      id
+      email
+    }
+    userSettings {
+      theme
+    }
   }
 }

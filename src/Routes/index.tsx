@@ -86,7 +86,7 @@ export const buildRoutes = () => {
     ...loggedOutRoutes,
     ...loggedInRoutes,
     //default route
-    <Route component={Home} />
+    <Route key={1000} component={Home} />
   ];
 
   return builtRoutes;

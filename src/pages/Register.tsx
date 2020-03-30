@@ -42,19 +42,22 @@ const Register: React.FC<IRegisterProps & RouteComponentProps> = ({
                 password: data.password
               },
               update: (store, { data }) => {
-                if (!data) {
+                if (!data || !data.register) {
                   return null;
                 }
 
                 store.writeQuery<MeQuery>({
                   query: MeDocument,
                   data: {
-                    me: data.register.user
+                    me: {
+                      user: data.register.user,
+                      userSettings: data.register.userSettings
+                    }
                   }
                 });
               }
             });
-            if (response && response.data) {
+            if (response && response.data && response.data.register) {
               setAccessToken(response.data.register.accessToken);
             }
             await client?.resetStore();
