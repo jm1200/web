@@ -32,7 +32,6 @@ export type Mutation = {
   login?: Maybe<LoginResponse>;
   register?: Maybe<LoginResponse>;
   uploadFile: UploadResponse;
-  updateSettings?: Maybe<UserSettings>;
 };
 
 
@@ -57,24 +56,12 @@ export type MutationUploadFileArgs = {
   file: Scalars['Upload'];
 };
 
-
-export type MutationUpdateSettingsArgs = {
-  userId: Scalars['Float'];
-  theme: Scalars['String'];
-};
-
 export type Query = {
    __typename?: 'Query';
   hello: Scalars['String'];
   bye: Scalars['String'];
   users: Array<User>;
   me?: Maybe<MeResponse>;
-  getUserSettings: UserSettings;
-};
-
-
-export type QueryGetUserSettingsArgs = {
-  userId: Scalars['Int'];
 };
 
 export type Transaction = {
