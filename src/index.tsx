@@ -14,11 +14,23 @@ import { createUploadLink } from "apollo-upload-client";
 import history from "./history";
 
 const cache = new InMemoryCache({});
+
+//#############################################################################
+// const consoleLink = new ApolloLink((operation, forward) => {
+//   console.log(`starting request for ${operation.operationName}`);
+//   return forward(operation).map(data => {
+//     console.log(`ending request for ${operation.operationName}`);
+//     return data;
+//   });
+// });
+
+//#############################################################################
 const uploadLink = createUploadLink({
   uri: "http://localhost:4000/graphql",
   credentials: "include"
 });
 
+//#############################################################################
 const requestLink = new ApolloLink(
   (operation, forward) =>
     new Observable(observer => {
@@ -26,6 +38,7 @@ const requestLink = new ApolloLink(
       Promise.resolve(operation)
         .then(operation => {
           const accessToken = getAccessToken();
+          // console.log("index 41: request link operation", operation);
           if (accessToken) {
             operation.setContext({
               headers: {
@@ -49,9 +62,11 @@ const requestLink = new ApolloLink(
     })
 );
 
+//#############################################################################
 const tokenRefreshLink = new TokenRefreshLink({
   accessTokenField: "accessToken",
   isTokenValidOrUndefined: () => {
+    //console.log("index 69: token refresh link");
     const token = getAccessToken();
 
     if (!token) {
@@ -84,8 +99,9 @@ const tokenRefreshLink = new TokenRefreshLink({
   }
 });
 
+//#############################################################################
 const errorHandler = onError(({ graphQLErrors, networkError }) => {
-  console.log("Error handler");
+  // console.log(" index 104: Error handler link");
   if (graphQLErrors) {
     graphQLErrors.forEach(({ message, path, locations }) => {
       console.log(
@@ -105,8 +121,11 @@ const errorHandler = onError(({ graphQLErrors, networkError }) => {
   console.log("These are gql errors: ", graphQLErrors);
   console.log(networkError);
 });
+
+//#############################################################################
 const client = new ApolloClient({
   link: ApolloLink.from([
+    // consoleLink,
     tokenRefreshLink,
     errorHandler,
     requestLink,
