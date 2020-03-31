@@ -16,6 +16,7 @@ export type LoginResponse = {
    __typename?: 'LoginResponse';
   accessToken: Scalars['String'];
   user: User;
+  userSettings: UserSettings;
 };
 
 export type Mutation = {
@@ -82,6 +83,12 @@ export type User = {
    __typename?: 'User';
   id: Scalars['Int'];
   email: Scalars['String'];
+};
+
+export type UserSettings = {
+   __typename?: 'UserSettings';
+  userId: Scalars['Int'];
+  theme: Scalars['String'];
 };
 
 export type ByeQueryVariables = {};
