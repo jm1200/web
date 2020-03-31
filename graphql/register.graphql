@@ -5,5 +5,8 @@ mutation Register($email: String!, $password: String!) {
       id
       email
     }
+    userSettings {
+      theme
+    }
   }
 }

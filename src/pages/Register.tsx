@@ -49,7 +49,12 @@ const Register: React.FC<IRegisterProps & RouteComponentProps> = ({
                 store.writeQuery<MeQuery>({
                   query: MeDocument,
                   data: {
-                    me: data.register.user
+                    __typename: "Query",
+                    me: {
+                      __typename: "MeResponse",
+                      user: data.register.user,
+                      userSettings: data.register.userSettings
+                    }
                   }
                 });
               }

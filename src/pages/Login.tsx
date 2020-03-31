@@ -49,7 +49,12 @@ const Login: React.FC<IRegisterProps & RouteComponentProps> = ({ history }) => {
                 store.writeQuery<MeQuery>({
                   query: MeDocument,
                   data: {
-                    me: data.login.user
+                    __typename: "Query",
+                    me: {
+                      __typename: "MeResponse",
+                      user: data.login.user,
+                      userSettings: data.login.userSettings
+                    }
                   }
                 });
               }

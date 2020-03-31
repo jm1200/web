@@ -20,3 +20,7 @@ register - create usersettings, set default
 login - get user settings
 how do you update theme and make it change on both server and client.
 need to update cache and server? two mutations?
+
+
+theme is retrieved on login. next try to change the theme and have it update server and store.
+need changeSettingsResolver mutation that also updates store like login and register.

@@ -16,6 +16,13 @@ export type LoginResponse = {
    __typename?: 'LoginResponse';
   accessToken: Scalars['String'];
   user: User;
+  userSettings?: Maybe<UserSettings>;
+};
+
+export type MeResponse = {
+   __typename?: 'MeResponse';
+  user?: Maybe<User>;
+  userSettings?: Maybe<UserSettings>;
 };
 
 export type Mutation = {
@@ -54,7 +61,7 @@ export type Query = {
   hello: Scalars['String'];
   bye: Scalars['String'];
   users: Array<User>;
-  me?: Maybe<User>;
+  me?: Maybe<MeResponse>;
 };
 
 export type Transaction = {
@@ -82,6 +89,12 @@ export type User = {
    __typename?: 'User';
   id: Scalars['Int'];
   email: Scalars['String'];
+};
+
+export type UserSettings = {
+   __typename?: 'UserSettings';
+  userId: Scalars['Int'];
+  theme: Scalars['String'];
 };
 
 export type ByeQueryVariables = {};
@@ -113,8 +126,11 @@ export type LoginMutation = (
     & Pick<LoginResponse, 'accessToken'>
     & { user: (
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'email'>
-    ) }
+      & Pick<User, 'email' | 'id'>
+    ), userSettings?: Maybe<(
+      { __typename?: 'UserSettings' }
+      & Pick<UserSettings, 'theme'>
+    )> }
   ) }
 );
 
@@ -132,8 +148,14 @@ export type MeQueryVariables = {};
 export type MeQuery = (
   { __typename?: 'Query' }
   & { me?: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'email' | 'id'>
+    { __typename?: 'MeResponse' }
+    & { user?: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'email' | 'id'>
+    )>, userSettings?: Maybe<(
+      { __typename?: 'UserSettings' }
+      & Pick<UserSettings, 'theme'>
+    )> }
   )> }
 );
 
@@ -151,7 +173,10 @@ export type RegisterMutation = (
     & { user: (
       { __typename?: 'User' }
       & Pick<User, 'id' | 'email'>
-    ) }
+    ), userSettings?: Maybe<(
+      { __typename?: 'UserSettings' }
+      & Pick<UserSettings, 'theme'>
+    )> }
   ) }
 );
 
@@ -232,8 +257,11 @@ export const LoginDocument = gql`
   login(email: $email, password: $password) {
     accessToken
     user {
-      id
       email
+      id
+    }
+    userSettings {
+      theme
     }
   }
 }
@@ -296,8 +324,13 @@ export type LogoutMutationOptions = ApolloReactCommon.BaseMutationOptions<Logout
 export const MeDocument = gql`
     query Me {
   me {
-    email
-    id
+    user {
+      email
+      id
+    }
+    userSettings {
+      theme
+    }
   }
 }
     `;
@@ -333,6 +366,9 @@ export const RegisterDocument = gql`
     user {
       id
       email
+    }
+    userSettings {
+      theme
     }
   }
 }
