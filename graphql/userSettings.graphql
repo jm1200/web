@@ -1,0 +1,9 @@
+query getUserSettings($userId: Float!) {
+  getUserSettings(userId: $userId) {
+    userId
+    theme
+  }
+}
+mutation updateTheme($userId: Float!, $theme: String!) {
+  updateTheme(userId: $userId, theme: $theme)
+}

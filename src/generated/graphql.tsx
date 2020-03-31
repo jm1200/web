@@ -32,6 +32,7 @@ export type Mutation = {
   login: LoginResponse;
   register: LoginResponse;
   uploadFile: UploadResponse;
+  updateTheme: Scalars['Boolean'];
 };
 
 
@@ -56,12 +57,24 @@ export type MutationUploadFileArgs = {
   file: Scalars['Upload'];
 };
 
+
+export type MutationUpdateThemeArgs = {
+  theme: Scalars['String'];
+  userId: Scalars['Float'];
+};
+
 export type Query = {
    __typename?: 'Query';
   hello: Scalars['String'];
   bye: Scalars['String'];
   users: Array<User>;
   me?: Maybe<MeResponse>;
+  getUserSettings: UserSettings;
+};
+
+
+export type QueryGetUserSettingsArgs = {
+  userId: Scalars['Float'];
 };
 
 export type Transaction = {
@@ -189,6 +202,30 @@ export type UsersQuery = (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'email'>
   )> }
+);
+
+export type GetUserSettingsQueryVariables = {
+  userId: Scalars['Float'];
+};
+
+
+export type GetUserSettingsQuery = (
+  { __typename?: 'Query' }
+  & { getUserSettings: (
+    { __typename?: 'UserSettings' }
+    & Pick<UserSettings, 'userId' | 'theme'>
+  ) }
+);
+
+export type UpdateThemeMutationVariables = {
+  userId: Scalars['Float'];
+  theme: Scalars['String'];
+};
+
+
+export type UpdateThemeMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'updateTheme'>
 );
 
 
@@ -432,3 +469,68 @@ export function useUsersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOp
 export type UsersQueryHookResult = ReturnType<typeof useUsersQuery>;
 export type UsersLazyQueryHookResult = ReturnType<typeof useUsersLazyQuery>;
 export type UsersQueryResult = ApolloReactCommon.QueryResult<UsersQuery, UsersQueryVariables>;
+export const GetUserSettingsDocument = gql`
+    query getUserSettings($userId: Float!) {
+  getUserSettings(userId: $userId) {
+    userId
+    theme
+  }
+}
+    `;
+
+/**
+ * __useGetUserSettingsQuery__
+ *
+ * To run a query within a React component, call `useGetUserSettingsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserSettingsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserSettingsQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetUserSettingsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetUserSettingsQuery, GetUserSettingsQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetUserSettingsQuery, GetUserSettingsQueryVariables>(GetUserSettingsDocument, baseOptions);
+      }
+export function useGetUserSettingsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetUserSettingsQuery, GetUserSettingsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetUserSettingsQuery, GetUserSettingsQueryVariables>(GetUserSettingsDocument, baseOptions);
+        }
+export type GetUserSettingsQueryHookResult = ReturnType<typeof useGetUserSettingsQuery>;
+export type GetUserSettingsLazyQueryHookResult = ReturnType<typeof useGetUserSettingsLazyQuery>;
+export type GetUserSettingsQueryResult = ApolloReactCommon.QueryResult<GetUserSettingsQuery, GetUserSettingsQueryVariables>;
+export const UpdateThemeDocument = gql`
+    mutation updateTheme($userId: Float!, $theme: String!) {
+  updateTheme(userId: $userId, theme: $theme)
+}
+    `;
+export type UpdateThemeMutationFn = ApolloReactCommon.MutationFunction<UpdateThemeMutation, UpdateThemeMutationVariables>;
+
+/**
+ * __useUpdateThemeMutation__
+ *
+ * To run a mutation, you first call `useUpdateThemeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateThemeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateThemeMutation, { data, loading, error }] = useUpdateThemeMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      theme: // value for 'theme'
+ *   },
+ * });
+ */
+export function useUpdateThemeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateThemeMutation, UpdateThemeMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateThemeMutation, UpdateThemeMutationVariables>(UpdateThemeDocument, baseOptions);
+      }
+export type UpdateThemeMutationHookResult = ReturnType<typeof useUpdateThemeMutation>;
+export type UpdateThemeMutationResult = ApolloReactCommon.MutationResult<UpdateThemeMutation>;
+export type UpdateThemeMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateThemeMutation, UpdateThemeMutationVariables>;
