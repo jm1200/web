@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { setAccessToken } from "./accessToken";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import {
-  createMuiTheme,
-  ThemeProvider,
-  FormControlLabel,
-  Checkbox
-} from "@material-ui/core";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import Nav from "./Components/Nav";
 import { BrowserRouter } from "react-router-dom";
 

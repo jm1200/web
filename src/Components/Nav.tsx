@@ -63,7 +63,7 @@ export default function Nav() {
   const { data } = useMeQuery();
   let user;
   if (data && data.me) {
-    user = data.me;
+    user = data.me.user;
   }
 
   const builtRoutes = buildRoutes();
