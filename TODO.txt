@@ -12,6 +12,8 @@
         - do i even need local state if i am querying database??
 
 - password type for login/register
+logout page is showing
+loggedinhome page is back??
 
 
 updateTheme mutation

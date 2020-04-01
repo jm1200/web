@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
@@ -17,8 +17,8 @@ import {
   createStyles
 } from "@material-ui/core/styles";
 import { Switch } from "react-router-dom";
-import { useMeQuery } from "../generated/graphql";
 import { buildLinks, buildRoutes } from "../Routes";
+import { UserContext } from "../App";
 
 const drawerWidth = 240;
 
@@ -60,11 +60,14 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function Nav() {
   const classes = useStyles();
   const theme = useTheme();
-  const { data } = useMeQuery();
+
   let user;
-  if (data && data.me) {
-    user = data.me.user;
+  const userContext = useContext(UserContext);
+  if (userContext) {
+    user = userContext.me?.user;
   }
+
+  console.log("User context in nav 69:", userContext);
 
   const builtRoutes = buildRoutes();
   const builtLinks = buildLinks();
