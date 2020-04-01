@@ -67,8 +67,6 @@ export default function Nav() {
     user = userContext.me?.user;
   }
 
-  console.log("User context in nav 69:", userContext);
-
   const builtRoutes = buildRoutes();
   const builtLinks = buildLinks();
 

@@ -1,13 +1,28 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
+import { UserContext } from "../App";
 
 interface ISettingsProps {}
 
 const Settings: React.FC<ISettingsProps> = props => {
-  const [checked, setChecked] = React.useState(false);
+  let user: any;
+  let userSettings: any;
+
+  const userContext = useContext(UserContext);
+
+  if (userContext) {
+    user = userContext.me?.user;
+    userSettings = userContext.me?.userSettings;
+  }
+  console.log(user, userSettings);
+
+  let checked = true;
+  if (userSettings && userSettings.theme === "light") {
+    checked = false;
+  }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
+    console.log("mutate checkbox");
   };
   return (
     <div>

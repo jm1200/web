@@ -40,12 +40,9 @@ const Login: React.FC<IRegisterProps & RouteComponentProps> = ({ history }) => {
                 password: data.password
               },
               update: (store, { data }) => {
-                console.log("login sent 2");
                 if (!data) {
-                  console.log("no data");
                   return null;
                 }
-                console.log("login sent 3");
                 store.writeQuery<MeQuery>({
                   query: MeDocument,
                   data: {
@@ -58,8 +55,6 @@ const Login: React.FC<IRegisterProps & RouteComponentProps> = ({ history }) => {
                 });
               }
             });
-
-            console.log("LOGIN RESPONSE: ", response.errors);
 
             if (response && response.data) {
               setAccessToken(response.data.login.accessToken);
