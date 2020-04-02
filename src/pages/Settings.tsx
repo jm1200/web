@@ -20,7 +20,6 @@ const Settings: React.FC<ISettingsProps> = props => {
     user = userContext.me?.user;
     userSettings = userContext.me?.userSettings;
   }
-  console.log(user, userSettings);
 
   let checked = true;
   if (userSettings && userSettings.theme === "light") {
@@ -28,7 +27,6 @@ const Settings: React.FC<ISettingsProps> = props => {
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("mutate checkbox");
     const updateThemeFunc = async () => {
       try {
         const response = await updateTheme({
@@ -55,9 +53,8 @@ const Settings: React.FC<ISettingsProps> = props => {
             });
           }
         });
-        console.log("settings 51: mutation response ", response);
       } catch (err) {
-        console.log("settings 32 errors: ", err);
+        console.log("errors: ", err);
       }
     };
 

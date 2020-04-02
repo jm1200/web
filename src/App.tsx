@@ -23,7 +23,6 @@ export const UserContext = React.createContext<MeQuery | undefined>(undefined);
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [meQuery, { data: meData }] = useMeLazyQuery();
-  console.log("nav me data: ", meData);
 
   let theme = lightTheme;
   if (meData && meData.me && meData.me.userSettings) {

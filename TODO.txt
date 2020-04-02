@@ -1,26 +1,11 @@
-- Clean up Routes
+
 - Set up testing environment
-- check error messages in user entity
+
 - remove MyTextField component into its own component and import in both login and register
 - clean up nav
 - redis user?
-- settings page
-    - global state needed for theme choice. 
-        - first step might be to just control state with apollo cache or first step might be to have a default setting in cache 
-            and then query for it on start.
-        - second step would be to load user settings from database. 1-1 relation? new entity?
-        - do i even need local state if i am querying database??
+
 
 - password type for login/register
 logout page is showing
 loggedinhome page is back??
-
-
-updateTheme mutation
-
-register - create usersettings, set default
-login - get user settings
-how do you update theme and make it change on both server and client.
-need to update cache and server? two mutations?
-
-Settings mutation.
