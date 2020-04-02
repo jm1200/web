@@ -12,17 +12,27 @@ const darkTheme = createMuiTheme({
   }
 });
 
-// const lightTheme = createMuiTheme({
-//   palette: {
-//     type: "light"
-//   }
-// });
+const lightTheme = createMuiTheme({
+  palette: {
+    type: "light"
+  }
+});
 
 export const UserContext = React.createContext<MeQuery | undefined>(undefined);
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [meQuery, { data: meData }] = useMeLazyQuery();
+  console.log("nav me data: ", meData);
+
+  let theme = lightTheme;
+  if (meData && meData.me && meData.me.userSettings) {
+    if (meData.me.userSettings.theme === "dark") {
+      theme = darkTheme;
+    } else {
+      theme = lightTheme;
+    }
+  }
 
   useEffect(() => {
     fetch("http://localhost:4000/refresh_token", {
@@ -44,7 +54,7 @@ const App: React.FC = () => {
     <>
       <BrowserRouter>
         <UserContext.Provider value={meData}>
-          <ThemeProvider theme={darkTheme}>
+          <ThemeProvider theme={theme}>
             <CssBaseline />
 
             <Nav />

@@ -22,3 +22,5 @@ register - create usersettings, set default
 login - get user settings
 how do you update theme and make it change on both server and client.
 need to update cache and server? two mutations?
+
+Settings mutation.
