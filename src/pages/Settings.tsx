@@ -29,7 +29,7 @@ const Settings: React.FC<ISettingsProps> = props => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const updateThemeFunc = async () => {
       try {
-        const response = await updateTheme({
+        await updateTheme({
           variables: {
             userId: user.id,
             theme: checked ? "light" : "dark"

@@ -1,11 +1,6 @@
 
 - Set up testing environment
-
-- remove MyTextField component into its own component and import in both login and register
 - clean up nav
 - redis user?
 
 
-- password type for login/register
-logout page is showing
-loggedinhome page is back??

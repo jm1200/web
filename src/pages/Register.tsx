@@ -3,8 +3,9 @@ import { useRegisterMutation, MeDocument, MeQuery } from "../generated/graphql";
 import { RouteComponentProps } from "react-router-dom";
 import { setAccessToken } from "../accessToken";
 import * as yup from "yup";
-import { Form, Formik, useField, FieldAttributes } from "formik";
-import { TextField, Button } from "@material-ui/core";
+import { Form, Formik } from "formik";
+import { Button } from "@material-ui/core";
+import { MyTextField } from "../Components/MyTextField";
 
 interface IRegisterProps {}
 
@@ -62,7 +63,6 @@ const Register: React.FC<IRegisterProps & RouteComponentProps> = ({
               setAccessToken(response.data.register.accessToken);
             }
             await client?.resetStore();
-            history.push("/loggedInHome");
           } catch (err) {
             //invalid login
             if (err.graphQLErrors) {
@@ -86,6 +86,7 @@ const Register: React.FC<IRegisterProps & RouteComponentProps> = ({
         registerFunc();
 
         setSubmitting(false);
+        history.push("/home");
       }}
     >
       {({ values, errors, isSubmitting }) => (
@@ -94,7 +95,11 @@ const Register: React.FC<IRegisterProps & RouteComponentProps> = ({
             <MyTextField placeholder="email" name="email" />
           </div>
           <div>
-            <MyTextField placeholder="password" name="password" />
+            <MyTextField
+              type="password"
+              placeholder="password"
+              name="password"
+            />
           </div>
 
           <div>
@@ -108,47 +113,7 @@ const Register: React.FC<IRegisterProps & RouteComponentProps> = ({
         </Form>
       )}
     </Formik>
-
-    // <form
-    //   onSubmit={async e => {
-    //     e.preventDefault();
-
-    //   }}
-    // >
-    //   <div>
-    //     <input
-    //       value={email}
-    //       placeholder="email"
-    //       onChange={e => setEmail(e.target.value)}
-    //     />
-    //   </div>
-    //   <div>
-    //     <input
-    //       type={password}
-    //       value={password}
-    //       placeholder="password"
-    //       onChange={e => setPassword(e.target.value)}
-    //     />
-    //   </div>
-    //   <button type="submit">Register</button>
-    // </form>
   );
 };
 
 export default Register;
-
-const MyTextField: React.FC<FieldAttributes<{}>> = ({
-  placeholder,
-  ...props
-}) => {
-  const [field, meta] = useField<{}>(props);
-  const errorText = meta.error && meta.touched ? meta.error : "";
-  return (
-    <TextField
-      placeholder={placeholder}
-      {...field}
-      helperText={errorText}
-      error={!!errorText}
-    />
-  );
-};

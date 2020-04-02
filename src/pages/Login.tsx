@@ -3,8 +3,9 @@ import { useLoginMutation, MeDocument, MeQuery } from "../generated/graphql";
 import { RouteComponentProps } from "react-router-dom";
 import { setAccessToken } from "../accessToken";
 import * as yup from "yup";
-import { Form, Formik, useField, FieldAttributes } from "formik";
-import { TextField, Button } from "@material-ui/core";
+import { Form, Formik } from "formik";
+import { Button } from "@material-ui/core";
+import { MyTextField } from "../Components/MyTextField";
 
 interface IRegisterProps {}
 
@@ -61,7 +62,6 @@ const Login: React.FC<IRegisterProps & RouteComponentProps> = ({ history }) => {
             }
 
             await client?.resetStore();
-            history.push("/loggedInHome");
           } catch (err) {
             //invalid login
             if (err.graphQLErrors) {
@@ -75,6 +75,7 @@ const Login: React.FC<IRegisterProps & RouteComponentProps> = ({ history }) => {
         loginFunc();
 
         setSubmitting(false);
+        history.push("/home");
       }}
     >
       {({ values, errors, isSubmitting }) => (
@@ -83,7 +84,11 @@ const Login: React.FC<IRegisterProps & RouteComponentProps> = ({ history }) => {
             <MyTextField placeholder="email" name="email" />
           </div>
           <div>
-            <MyTextField placeholder="password" name="password" />
+            <MyTextField
+              type="password"
+              placeholder="password"
+              name="password"
+            />
           </div>
 
           <div>
@@ -101,19 +106,3 @@ const Login: React.FC<IRegisterProps & RouteComponentProps> = ({ history }) => {
 };
 
 export default Login;
-
-const MyTextField: React.FC<FieldAttributes<{}>> = ({
-  placeholder,
-  ...props
-}) => {
-  const [field, meta] = useField<{}>(props);
-  const errorText = meta.error && meta.touched ? meta.error : "";
-  return (
-    <TextField
-      placeholder={placeholder}
-      {...field}
-      helperText={errorText}
-      error={!!errorText}
-    />
-  );
-};

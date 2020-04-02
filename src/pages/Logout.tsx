@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useLogoutMutation } from "../generated/graphql";
 import { setAccessToken } from "../accessToken";
 import { RouteProps } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 const Logout: React.FC<RouteProps> = (props: RouteProps) => {
   const [logout, { client }] = useLogoutMutation();
@@ -14,7 +15,11 @@ const Logout: React.FC<RouteProps> = (props: RouteProps) => {
     };
     _logout();
   }, [logout, client]);
-  return <div>Logout</div>;
+  return (
+    <div>
+      Logout<Redirect to="/home"></Redirect>
+    </div>
+  );
 };
 
 export default Logout;
