@@ -62,6 +62,7 @@ const Login: React.FC<IRegisterProps & RouteComponentProps> = ({ history }) => {
             }
 
             await client?.resetStore();
+            history.push("/home");
           } catch (err) {
             //invalid login
             if (err.graphQLErrors) {
@@ -75,7 +76,6 @@ const Login: React.FC<IRegisterProps & RouteComponentProps> = ({ history }) => {
         loginFunc();
 
         setSubmitting(false);
-        history.push("/home");
       }}
     >
       {({ values, errors, isSubmitting }) => (

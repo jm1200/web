@@ -63,6 +63,8 @@ const Register: React.FC<IRegisterProps & RouteComponentProps> = ({
               setAccessToken(response.data.register.accessToken);
             }
             await client?.resetStore();
+
+            history.push("/home");
           } catch (err) {
             //invalid login
             if (err.graphQLErrors) {
@@ -74,6 +76,12 @@ const Register: React.FC<IRegisterProps & RouteComponentProps> = ({
                 setRegisterError(
                   "That email is unavailable. Choose another email"
                 );
+              } else if (
+                err.graphQLErrors[0].message.includes(
+                  "Argument Validation Error"
+                )
+              ) {
+                setRegisterError("Password is too short");
               } else {
                 setRegisterError(err.graphQLErrors[0].message);
               }
@@ -86,7 +94,6 @@ const Register: React.FC<IRegisterProps & RouteComponentProps> = ({
         registerFunc();
 
         setSubmitting(false);
-        history.push("/home");
       }}
     >
       {({ values, errors, isSubmitting }) => (

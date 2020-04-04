@@ -12,7 +12,6 @@ export const MyTextField: React.FC<IMyTextFieldProps> = ({
 }) => {
   const [field, meta] = useField<{ type?: string }>(props);
   const errorText = meta.error && meta.touched ? meta.error : "";
-  console.log("MyTextField: props", props, field, meta);
   return (
     //@ts-ignore
     <TextField

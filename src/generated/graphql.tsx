@@ -42,14 +42,12 @@ export type MutationRevokeRefreshTokensForUserArgs = {
 
 
 export type MutationLoginArgs = {
-  password: Scalars['String'];
-  email: Scalars['String'];
+  data: RegisterInput;
 };
 
 
 export type MutationRegisterArgs = {
-  password: Scalars['String'];
-  email: Scalars['String'];
+  data: RegisterInput;
 };
 
 
@@ -75,6 +73,11 @@ export type Query = {
 
 export type QueryGetUserSettingsArgs = {
   userId: Scalars['Int'];
+};
+
+export type RegisterInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type Transaction = {
@@ -281,7 +284,7 @@ export type HelloLazyQueryHookResult = ReturnType<typeof useHelloLazyQuery>;
 export type HelloQueryResult = ApolloReactCommon.QueryResult<HelloQuery, HelloQueryVariables>;
 export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {
-  login(email: $email, password: $password) {
+  login(data: {email: $email, password: $password}) {
     accessToken
     user {
       id
@@ -388,7 +391,7 @@ export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = ApolloReactCommon.QueryResult<MeQuery, MeQueryVariables>;
 export const RegisterDocument = gql`
     mutation Register($email: String!, $password: String!) {
-  register(email: $email, password: $password) {
+  register(data: {email: $email, password: $password}) {
     accessToken
     user {
       id
