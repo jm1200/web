@@ -10,11 +10,8 @@ import { MyTextField } from "../Components/MyTextField";
 interface IRegisterProps {}
 
 const validationSchema = yup.object({
-  email: yup
-    .string()
-    .required()
-    .email(),
-  password: yup.string().required()
+  email: yup.string().required().email(),
+  password: yup.string().required(),
 });
 
 const Login: React.FC<IRegisterProps & RouteComponentProps> = ({ history }) => {
@@ -26,7 +23,7 @@ const Login: React.FC<IRegisterProps & RouteComponentProps> = ({ history }) => {
       validateOnChange={true}
       initialValues={{
         email: "",
-        password: ""
+        password: "",
       }}
       validationSchema={validationSchema}
       onSubmit={(data, { setSubmitting }) => {
@@ -38,7 +35,7 @@ const Login: React.FC<IRegisterProps & RouteComponentProps> = ({ history }) => {
             const response = await login({
               variables: {
                 email: data.email,
-                password: data.password
+                password: data.password,
               },
               update: (store, { data }) => {
                 if (!data) {
@@ -50,11 +47,11 @@ const Login: React.FC<IRegisterProps & RouteComponentProps> = ({ history }) => {
                     me: {
                       __typename: "MeResponse",
                       user: data.login.user,
-                      userSettings: data.login.userSettings
-                    }
-                  }
+                      userSettings: data.login.userSettings,
+                    },
+                  },
                 });
-              }
+              },
             });
 
             if (response && response.data) {
